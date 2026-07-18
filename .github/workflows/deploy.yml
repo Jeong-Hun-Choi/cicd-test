@@ -1,0 +1,41 @@
+name: CD Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    #runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64]
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Grant Maven Wrapper permission
+        run: chmod +x mvnw
+
+      - name: Build application
+        run: ./mvnw clean package
+
+      - name: Build Docker image
+        run: docker build -t cicd-test:latest .
+
+      - name: Remove old container
+        run: |
+          docker stop cicd-test || true
+          docker rm cicd-test || true
+
+      - name: Run new container
+        run: |
+          docker run -d \
+            --name cicd-test \
+            --restart unless-stopped \
+            -p 8080:8080 \
+            cicd-test:latest
+
+      - name: Verify deployment
+        run: |
+          sleep 10
+          curl --fail http://localhost:8080
