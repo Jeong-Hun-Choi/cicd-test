@@ -27,6 +27,11 @@ jobs:
           docker stop cicd-test || true
           docker rm cicd-test || true
 
+      - name: Remove container using port 8080
+        run: |
+          docker ps -q --filter publish=8080 | xargs -r docker rm -f
+
+
       - name: Run new container
         run: |
           docker run -d \
@@ -39,3 +44,4 @@ jobs:
         run: |
           sleep 10
           curl --fail http://localhost:8080
+
