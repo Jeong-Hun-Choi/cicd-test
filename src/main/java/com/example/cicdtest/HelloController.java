@@ -8,6 +8,6 @@ public class HelloController {
 
     @GetMapping("/")
     public String home() {
-        return "Spring Boot CI/CD 17 Test";
+        return "Spring Boot CI/CD 18 Test";
     }
 }

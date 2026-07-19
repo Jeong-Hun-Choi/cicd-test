@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CicdTestApplication {
 
 	public static void main(String[] args) {
-		System.out.println("CI/CD Test Application 시작 17");
+		System.out.println("CI/CD Test Application 시작 18");
 		
 		SpringApplication.run(CicdTestApplication.class, args);
 	}
