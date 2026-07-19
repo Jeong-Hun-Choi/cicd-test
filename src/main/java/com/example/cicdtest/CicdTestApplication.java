@@ -13,5 +13,3 @@ public class CicdTestApplication {
 	}
 
 }
-//git config --global user.email "cjhcross2@daum.net"
-//git clone https://github.com/Jeong-Hun-Choi/cicd-test.git
