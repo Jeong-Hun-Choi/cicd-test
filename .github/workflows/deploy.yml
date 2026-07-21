@@ -6,12 +6,21 @@ on:
 
 jobs:
   deploy:
-    #runs-on: self-hosted
     runs-on: [self-hosted, Linux, X64]
 
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+
+      - name: Set up JDK 26
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '26'
+          cache: maven
+
+      - name: Check Java version
+        run: java -version
 
       - name: Grant Maven Wrapper permission
         run: chmod +x mvnw
@@ -31,7 +40,6 @@ jobs:
         run: |
           docker ps -q --filter publish=8080 | xargs -r docker rm -f
 
-
       - name: Run new container
         run: |
           docker run -d \
@@ -44,4 +52,3 @@ jobs:
         run: |
           sleep 10
           curl --fail http://localhost:8080
-
